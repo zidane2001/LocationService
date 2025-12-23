@@ -1,0 +1,91 @@
+package com.Logistic.LocationService.service;
+
+import com.Logistic.LocationService.dto.LocationRequestDto;
+import com.Logistic.LocationService.dto.LocationResponseDto;
+import com.Logistic.LocationService.entity.Location;
+import com.Logistic.LocationService.exception.LocationNotFoundException;
+import com.Logistic.LocationService.mapper.LocationMapper;
+import com.Logistic.LocationService.repository.LocationRepository;
+import com.Logistic.LocationService.service.impl.LocationServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.List;
+import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class LocationServiceTest {
+
+    @Mock
+    private LocationRepository repository;
+    @Mock
+    private LocationMapper mapper;
+    @InjectMocks
+    private LocationServiceImpl service;
+
+    private Location location;
+    private LocationRequestDto requestDto;
+    private LocationResponseDto responseDto;
+
+    @BeforeEach
+    void setUp() {
+        location = new Location();
+        location.setLocationId("1");
+        location.setCity("Test City");
+        location.setZone("Test Zone");
+        location.setCheckpointAvailable(true);
+
+        requestDto = new LocationRequestDto();
+        requestDto.setCity("Test City");
+        requestDto.setZone("Test Zone");
+        requestDto.setCheckpointAvailable(true);
+
+        responseDto = new LocationResponseDto();
+        responseDto.setLocationId("1");
+        responseDto.setCity("Test City");
+        responseDto.setZone("Test Zone");
+        responseDto.setCheckpointAvailable(true);
+    }
+
+    @Test
+    void create_ShouldReturnLocationResponseDto() {
+        when(mapper.toEntity(requestDto)).thenReturn(location);
+        when(repository.save(location)).thenReturn(location);
+        when(mapper.toDto(location)).thenReturn(responseDto);
+
+        LocationResponseDto result = service.create(requestDto);
+
+        assertNotNull(result);
+        assertEquals("1", result.getLocationId());
+        verify(repository).save(location);
+    }
+
+    @Test
+    void getById_ShouldReturnLocation_WhenExists() {
+        when(repository.findById("1")).thenReturn(Optional.of(location));
+        Location result = service.getById("1");
+        assertNotNull(result);
+        assertEquals("1", result.getLocationId());
+    }
+
+    @Test
+    void getById_ShouldThrowException_WhenNotExists() {
+        when(repository.findById("1")).thenReturn(Optional.empty());
+
+        assertThrows(LocationNotFoundException.class, () -> service.getById("1"));
+    }
+
+    @Test
+    void getAll_ShouldReturnListOfLocation() {
+        when(repository.findAll()).thenReturn(List.of(location));
+        List<Location> result = service.getAll();
+        assertNotNull(result);
+        assertEquals(1, result.size());
+    }
+
+}

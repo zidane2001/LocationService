@@ -81,3 +81,4 @@ secrets/
 **/test-results/
 **/reports/
 .coverage
+.gitattributes
