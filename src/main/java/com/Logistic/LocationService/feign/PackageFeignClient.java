@@ -8,18 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(
-
-        name = "package-service",
-
-        url = "http://localhost:8080"
-
-)
+@FeignClient(name = "package-service")
 
 public interface PackageFeignClient {
 
-    @GetMapping("/api/packages/{id}")
-
+    @GetMapping("/api/packages/feign/{id}")
     PackageResponseDto getById(@PathVariable("id") Long id);
-
 }

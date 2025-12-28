@@ -2,8 +2,10 @@ package com.Logistic.LocationService.service;
 
 import com.Logistic.LocationService.dto.LocationRequestDto;
 import com.Logistic.LocationService.dto.LocationResponseDto;
+import com.Logistic.LocationService.dto.PackageResponseDto;
 import com.Logistic.LocationService.entity.Location;
 import com.Logistic.LocationService.exception.LocationNotFoundException;
+import com.Logistic.LocationService.feign.PackageFeignClient;
 import com.Logistic.LocationService.mapper.LocationMapper;
 import com.Logistic.LocationService.repository.LocationRepository;
 import com.Logistic.LocationService.service.impl.LocationServiceImpl;
@@ -25,12 +27,15 @@ class LocationServiceTest {
     private LocationRepository repository;
     @Mock
     private LocationMapper mapper;
+    @Mock
+    private PackageFeignClient packageFeignClient;
     @InjectMocks
     private LocationServiceImpl service;
 
     private Location location;
     private LocationRequestDto requestDto;
     private LocationResponseDto responseDto;
+    private PackageResponseDto packageResponseDto;
 
     @BeforeEach
     void setUp() {
@@ -50,6 +55,13 @@ class LocationServiceTest {
         responseDto.setCity("Test City");
         responseDto.setZone("Test Zone");
         responseDto.setCheckpointAvailable(true);
+
+        packageResponseDto = new PackageResponseDto();
+        packageResponseDto.setId(1L);
+        packageResponseDto.setDescription("Test Package");
+        packageResponseDto.setWeight(5.0);
+        packageResponseDto.setIsFragile(true);
+        packageResponseDto.setStatus("CREATED");
     }
 
     @Test
@@ -86,6 +98,18 @@ class LocationServiceTest {
         List<Location> result = service.getAll();
         assertNotNull(result);
         assertEquals(1, result.size());
+    }
+
+    @Test
+    void getPackageInfo_ShouldReturnPackageResponseDto() {
+        when(packageFeignClient.getById(1L)).thenReturn(packageResponseDto);
+
+        PackageResponseDto result = service.getPackageInfo(1L);
+
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        assertEquals("Test Package", result.getDescription());
+        verify(packageFeignClient).getById(1L);
     }
 
 }

@@ -7,6 +7,8 @@ import com.Logistic.LocationService.service.LocationService;
 import com.Logistic.LocationService.entity.Location;
 import com.Logistic.LocationService.mapper.LocationMapper;
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +23,13 @@ public class LocationController {
 
     @PostMapping
     public ResponseEntity<LocationResponseDto> create(
-            @RequestBody LocationRequestDto request) {
-        return ResponseEntity.ok(locationService.create(request));
+             @RequestBody LocationRequestDto request) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(locationService.create(request));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LocationResponseDto> getById(
-            @PathVariable String id) {
+    public ResponseEntity<LocationResponseDto> getById(@PathVariable String id) {
         Location entity = locationService.getById(id);
         LocationResponseDto responseDto = mapper.toDto(entity);
         return ResponseEntity.ok(responseDto);
@@ -41,8 +43,7 @@ public class LocationController {
     }
 
     @GetMapping("/package/{packageId}")
-    public ResponseEntity<PackageResponseDto> getPackageInfo(
-            @PathVariable Long packageId) {
+    public ResponseEntity<PackageResponseDto> getPackageInfo(@PathVariable Long packageId) {
         return ResponseEntity.ok(locationService.getPackageInfo(packageId));
     }
 }
