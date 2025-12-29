@@ -1,14 +1,14 @@
 package com.Logistic.LocationService.service;
 
-import com.Logistic.LocationService.dto.LocationRequestDto;
-import com.Logistic.LocationService.dto.LocationResponseDto;
-import com.Logistic.LocationService.dto.PackageResponseDto;
-import com.Logistic.LocationService.entity.Location;
-import com.Logistic.LocationService.exception.LocationNotFoundException;
-import com.Logistic.LocationService.feign.PackageFeignClient;
-import com.Logistic.LocationService.mapper.LocationMapper;
-import com.Logistic.LocationService.repository.LocationRepository;
-import com.Logistic.LocationService.service.impl.LocationServiceImpl;
+import com.Logistic.LocationService.core.feign.PackageFeignClient;
+import com.Logistic.LocationService.domain.dto.LocationRequestDto;
+import com.Logistic.LocationService.domain.dto.LocationResponseDto;
+import com.Logistic.LocationService.domain.dto.PackageResponseDto;
+import com.Logistic.LocationService.domain.entity.Location;
+import com.Logistic.LocationService.domain.exception.LocationNotFoundException;
+import com.Logistic.LocationService.domain.mapper.LocationMapper;
+import com.Logistic.LocationService.domain.repository.LocationRepository;
+import com.Logistic.LocationService.domain.service.impl.LocationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +40,7 @@ class LocationServiceTest {
     @BeforeEach
     void setUp() {
         location = new Location();
-        location.setLocationId("1");
+        location.setId("1");
         location.setCity("Test City");
         location.setZone("Test Zone");
         location.setCheckpointAvailable(true);
@@ -51,7 +51,7 @@ class LocationServiceTest {
         requestDto.setCheckpointAvailable(true);
 
         responseDto = new LocationResponseDto();
-        responseDto.setLocationId("1");
+        responseDto.setId("1");
         responseDto.setCity("Test City");
         responseDto.setZone("Test Zone");
         responseDto.setCheckpointAvailable(true);
@@ -73,7 +73,7 @@ class LocationServiceTest {
         LocationResponseDto result = service.create(requestDto);
 
         assertNotNull(result);
-        assertEquals("1", result.getLocationId());
+        assertEquals("1", result.getId());
         verify(repository).save(location);
     }
 
@@ -82,7 +82,7 @@ class LocationServiceTest {
         when(repository.findById("1")).thenReturn(Optional.of(location));
         Location result = service.getById("1");
         assertNotNull(result);
-        assertEquals("1", result.getLocationId());
+        assertEquals("1", result.getId());
     }
 
     @Test
@@ -95,7 +95,8 @@ class LocationServiceTest {
     @Test
     void getAll_ShouldReturnListOfLocation() {
         when(repository.findAll()).thenReturn(List.of(location));
-        List<Location> result = service.getAll();
+        when(mapper.toDto(location)).thenReturn(responseDto);
+        List<LocationResponseDto> result = service.getAll();
         assertNotNull(result);
         assertEquals(1, result.size());
     }

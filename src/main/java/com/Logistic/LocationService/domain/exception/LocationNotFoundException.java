@@ -1,4 +1,4 @@
-package com.Logistic.LocationService.exception;
+package com.Logistic.LocationService.domain.exception;
 
 public class LocationNotFoundException
         extends RuntimeException {

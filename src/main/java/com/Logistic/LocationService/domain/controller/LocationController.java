@@ -1,11 +1,11 @@
-package com.Logistic.LocationService.controller;
+package com.Logistic.LocationService.domain.controller;
 
-import com.Logistic.LocationService.dto.LocationRequestDto;
-import com.Logistic.LocationService.dto.LocationResponseDto;
-import com.Logistic.LocationService.dto.PackageResponseDto;
-import com.Logistic.LocationService.service.LocationService;
-import com.Logistic.LocationService.entity.Location;
-import com.Logistic.LocationService.mapper.LocationMapper;
+import com.Logistic.LocationService.domain.dto.LocationRequestDto;
+import com.Logistic.LocationService.domain.dto.LocationResponseDto;
+import com.Logistic.LocationService.domain.dto.PackageResponseDto;
+import com.Logistic.LocationService.domain.service.LocationService;
+import com.Logistic.LocationService.domain.entity.Location;
+import com.Logistic.LocationService.domain.mapper.LocationMapper;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class LocationController {
 
     @PostMapping
     public ResponseEntity<LocationResponseDto> create(
-             @RequestBody LocationRequestDto request) {
+            @RequestBody LocationRequestDto request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(locationService.create(request));
     }
@@ -35,10 +35,9 @@ public class LocationController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<LocationResponseDto>> getAll() {
-        List<Location> entities = locationService.getAll();
-        List<LocationResponseDto> responseDtos = mapper.toDtoList(entities);
+        List<LocationResponseDto> responseDtos = locationService.getAll();
         return ResponseEntity.ok(responseDtos);
     }
 

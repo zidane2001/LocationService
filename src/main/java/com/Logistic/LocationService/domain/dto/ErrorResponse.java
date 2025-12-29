@@ -1,4 +1,4 @@
-package com.Logistic.LocationService.dto;
+package com.Logistic.LocationService.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,9 +1,10 @@
-package com.Logistic.LocationService.entity;
+package com.Logistic.LocationService.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Location {
 
     @Id
-    private String locationId;
+    private String id;
     private String city;
     private String zone;
     private Boolean checkpointAvailable;

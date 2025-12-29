@@ -1,8 +1,8 @@
-package com.Logistic.LocationService.mapper;
+package com.Logistic.LocationService.domain.mapper;
 
-import com.Logistic.LocationService.dto.LocationRequestDto;
-import com.Logistic.LocationService.dto.LocationResponseDto;
-import com.Logistic.LocationService.entity.Location;
+import com.Logistic.LocationService.domain.dto.LocationRequestDto;
+import com.Logistic.LocationService.domain.dto.LocationResponseDto;
+import com.Logistic.LocationService.domain.entity.Location;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface LocationMapper {
 
-    @Mapping(target = "locationId", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Location toEntity(LocationRequestDto dto);
 
     LocationResponseDto toDto(Location entity);

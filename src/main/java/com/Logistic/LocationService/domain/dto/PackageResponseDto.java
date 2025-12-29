@@ -1,4 +1,4 @@
-package com.Logistic.LocationService.dto;
+package com.Logistic.LocationService.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,5 +12,5 @@ public class PackageResponseDto {
     private String description;
     private Double weight;
     private Boolean isFragile;
-    private String status; 
+    private String status;
 }

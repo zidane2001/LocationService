@@ -42,8 +42,8 @@ services:
       dockerfile: Dockerfile
     container_name: location-service-app
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://root:mongopass@mongo:27017/locationdb?authSource=admin
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATA_MONGODB_URI=mongodb://${MONGO_ROOT_USERNAME:-root}:${MONGO_ROOT_PASSWORD}@mongo:27017/locationdb?authSource=admin
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=${EUREKA_URL:-http://eureka-server:8761/eureka/}
       - SPRING_PROFILES_ACTIVE=docker
     ports:
       - "8090:8090"
