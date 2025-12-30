@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Location {
 
     @Id
-    @NotBlank (message = "Id cannot be blank")
+    
     private String id;
     @NotBlank (message = "City cannot be blank")
     private String city;

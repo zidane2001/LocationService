@@ -4,6 +4,9 @@ import com.Logistic.LocationService.domain.dto.LocationRequestDto;
 import com.Logistic.LocationService.domain.dto.LocationResponseDto;
 import com.Logistic.LocationService.domain.dto.PackageResponseDto;
 import com.Logistic.LocationService.domain.service.LocationService;
+
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -20,7 +23,7 @@ public class LocationController {
     
 
     @PostMapping
-    public ResponseEntity<LocationResponseDto> create(
+    public ResponseEntity<LocationResponseDto> create( @Valid
             @RequestBody LocationRequestDto request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(locationService.create(request));

@@ -13,18 +13,18 @@ public class FeignConfiguration {
     @SuppressWarnings("deprecation")
     public Request.Options options() {
         return new Request.Options(
-                5000, // connectTimeout
-                10000, // readTimeout
-                true // followRedirects
+                5000, 
+                10000,
+                true
         );
     }
 
     @Bean
     public Retryer retryer() {
         return new Retryer.Default(
-                100, // period
-                1000, // maxPeriod
-                3 // maxAttempts
+                100, 
+                1000,
+                3 
         );
     }
 }
