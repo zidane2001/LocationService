@@ -80,7 +80,7 @@ class LocationServiceTest {
     @Test
     void getById_ShouldReturnLocation_WhenExists() {
         when(repository.findById("1")).thenReturn(Optional.of(location));
-        Location result = service.getById("1");
+        LocationResponseDto result = service.getById("1");
         assertNotNull(result);
         assertEquals("1", result.getId());
     }

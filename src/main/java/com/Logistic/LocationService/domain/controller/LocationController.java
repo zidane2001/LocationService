@@ -4,8 +4,6 @@ import com.Logistic.LocationService.domain.dto.LocationRequestDto;
 import com.Logistic.LocationService.domain.dto.LocationResponseDto;
 import com.Logistic.LocationService.domain.dto.PackageResponseDto;
 import com.Logistic.LocationService.domain.service.LocationService;
-import com.Logistic.LocationService.domain.entity.Location;
-import com.Logistic.LocationService.domain.mapper.LocationMapper;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class LocationController {
 
     private final LocationService locationService;
-    private final LocationMapper mapper;
+    
 
     @PostMapping
     public ResponseEntity<LocationResponseDto> create(
@@ -30,9 +28,7 @@ public class LocationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<LocationResponseDto> getById(@PathVariable String id) {
-        Location entity = locationService.getById(id);
-        LocationResponseDto responseDto = mapper.toDto(entity);
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(locationService.getById(id));
     }
 
     @GetMapping("/all")

@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../../package-service"
+		},
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../eureukaServer"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}

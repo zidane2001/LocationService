@@ -25,6 +25,17 @@ public class GlobalExceptionHandler {
                 return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
 
+        @ExceptionHandler(PackageServiceUnavailableException.class)
+        public ResponseEntity<ErrorResponse> handlePackageServiceUnavailableException(
+                        PackageServiceUnavailableException ex) {
+                log.error("Package service unavailable: {}", ex.getMessage());
+                ErrorResponse errorResponse = new ErrorResponse(
+                                HttpStatus.SERVICE_UNAVAILABLE.value(),
+                                ex.getMessage(),
+                                LocalDateTime.now());
+                return new ResponseEntity<>(errorResponse, HttpStatus.SERVICE_UNAVAILABLE);
+        }
+
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
                 log.warn("Validation error: {}", ex.getMessage());
