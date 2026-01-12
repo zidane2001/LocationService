@@ -6,8 +6,8 @@ import com.Logistic.LocationService.domain.exception.PackageServiceUnavailableEx
 
 @Component
 public class PackageFeignClientFallback implements PackageFeignClient {
-     @Override
-    public PackageResponseDto getById(Long id) {
+    @Override
+    public PackageResponseDto getPackage(Long id) {
         throw new PackageServiceUnavailableException("Package service is currently unavailable");
     }
 }

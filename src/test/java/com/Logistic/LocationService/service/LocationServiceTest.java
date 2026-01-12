@@ -103,14 +103,14 @@ class LocationServiceTest {
 
     @Test
     void getPackageInfo_ShouldReturnPackageResponseDto() {
-        when(packageFeignClient.getById(1L)).thenReturn(packageResponseDto);
+        when(packageFeignClient.getPackage(1L)).thenReturn(packageResponseDto);
 
         PackageResponseDto result = service.getPackageInfo(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertEquals("Test Package", result.getDescription());
-        verify(packageFeignClient).getById(1L);
+        verify(packageFeignClient).getPackage(1L);
     }
 
 }
