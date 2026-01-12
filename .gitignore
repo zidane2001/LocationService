@@ -1,7 +1,6 @@
 # HELP.md (généré par Spring Boot)
 HELP.md
 
-.gitattributes
 maven-wrapper.properties
 README.md
 mvnw
@@ -81,3 +80,4 @@ secrets/
 **/test-results/
 **/reports/
 .coverage
+.gitattributes
